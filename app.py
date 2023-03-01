@@ -249,7 +249,8 @@ def main() :
     st.header("**Customer file analysis**")
     
     prediction = load_prediction(sample, chk_id)
-    st.write("**Default probability : **{:.0f} %".format((prediction)))
+    
+    st.write("**Default probability : **{:.0f} %".format(round(float(prediction)*100, 2)))
 
     #Compute decision according to the best threshold
     #if prediction <= xx :
