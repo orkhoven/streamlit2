@@ -250,7 +250,7 @@ def main() :
     
     prediction = load_prediction(sample, chk_id)
     
-    st.write(prediction)
+    st.write(prediction.json())
 
     #Compute decision according to the best threshold
     #if prediction <= xx :
