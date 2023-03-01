@@ -98,8 +98,8 @@ def main() :
 
     @st.cache
     def load_prediction(sample, id):
-        with open("cli.json", "w",) as file:
-            json.dump(sample, file,)
+        #with open("cli.json", "w",) as file:
+        #    json.dump(sample, file,)
         files = {'file': open("./cli.json", 'rb')}        
         FASTAPI_URL = 'https://orkun-credit8.onrender.com/predict'
         response = requests.post(FASTAPI_URL, files = files)
