@@ -97,8 +97,9 @@ def main() :
         return df_income
 
     @st.cache
-    def load_prediction(features, id):
+    def load_prediction(sample, id):
         FASTAPI_URL = "https://orkun-credit.onrender.com/predict"
+        features = sample
         jsonson = features.to_json(orient='columns')
         jsonsonson = json.loads((jsonson))
         
@@ -135,7 +136,6 @@ def main() :
     data, sample, target, description = load_data()
     id_client = sample.index.values
     clf = load_model()
-    features = sample.iloc[:, :-1]
 
 
     #######################################
@@ -253,8 +253,8 @@ def main() :
     #Customer solvability displayprediction = load_prediction(sample, chk_id, clf)
     st.header("**Customer file analysis**")
     
-    prediction = load_prediction(features, chk_id)
-    st.write("**Default probability : **{:.0f} %".format(round(float(prediction)*100, 2)))
+    prediction = load_prediction(sample, chk_id)
+    st.write("**Default probability : **{:.0f} %".format(round((prediction)*100, 2)))
 
     #Compute decision according to the best threshold
     #if prediction <= xx :
