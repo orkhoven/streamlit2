@@ -101,8 +101,9 @@ def main() :
         #with open("cli.json", "w",) as file:
         #    json.dump(sample, file,)
         files = {'file': open("./cli.json", 'rb')}        
-        FASTAPI_URL = 'https://orkun-credit8.onrender.com/predict'
+        FASTAPI_URL = 'https://orkun-credit88.onrender.com/predict'
         response = requests.post(FASTAPI_URL, files = files)
+        response = response.json()
         #score = clf.predict_proba(X[X.index == int(id)])[:,1]
         
         return response
@@ -250,7 +251,7 @@ def main() :
     
     prediction = load_prediction(sample, chk_id)
     
-    st.write(prediction.json())
+    st.write(prediction)
 
     #Compute decision according to the best threshold
     #if prediction <= xx :
