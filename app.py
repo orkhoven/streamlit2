@@ -254,6 +254,8 @@ def main() :
     st.header("**Customer file analysis**")
     
     prediction = load_prediction(sample, chk_id)
+    FASTAPI_URL = "https://orkun-credit.onrender.com/predict"
+    response = requests.get(FASTAPI_URL)
     st.components.v1.html(response.text)
     st.write("**Default probability : **{:.0f} %".format(round(float(prediction)*100, 2)))
 
