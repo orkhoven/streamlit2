@@ -100,13 +100,13 @@ def main() :
     def load_prediction(sample, id):
         #with open("cli.json", "w",) as file:
         #    json.dump(sample, file,)
-        files = {'file': open("./cli.json", 'rb')}        
+        files = {'file': open("cli.json", 'rb')}        
         FASTAPI_URL = 'https://orkun-credit88.onrender.com/predict'
         response = requests.post(FASTAPI_URL, files = files)
-        response = response.text
+        response2 = response.text
         #score = clf.predict_proba(X[X.index == int(id)])[:,1]
         
-        return response
+        return response2
 
     @st.cache
     def load_kmeans(sample, id, mdl):
