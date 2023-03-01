@@ -1,4 +1,5 @@
 import requests
+import json
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -96,10 +97,12 @@ def main() :
         return df_income
 
     @st.cache
-    def load_prediction(features):
+    def load_prediction(features, id):
         FASTAPI_URL = "https://orkun-credit.onrender.com/predict"
+        jsonson = features.to_json(orient='columns')
+        jsonsonson = json.loads((jsonson))
         
-        response = requests.post(FASTAPI_URL, json=features)
+        response = requests.post(FASTAPI_URL, json=jsonsonson)
         
         
         
