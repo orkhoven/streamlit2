@@ -253,7 +253,7 @@ def main() :
     #Customer solvability displayprediction = load_prediction(sample, chk_id, clf)
     st.header("**Customer file analysis**")
     
-    prediction = load_prediction(features)
+    prediction = load_prediction(features, chk_id)
     st.write("**Default probability : **{:.0f} %".format(round(float(prediction)*100, 2)))
 
     #Compute decision according to the best threshold
