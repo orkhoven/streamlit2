@@ -250,7 +250,7 @@ def main() :
     
     prediction = load_prediction(sample, chk_id)
     
-    st.write("**Default probability : **{:.0f} %".format(round(float(prediction)*100, 2)))
+    st.write(prediction)
 
     #Compute decision according to the best threshold
     #if prediction <= xx :
