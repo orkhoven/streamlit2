@@ -103,7 +103,7 @@ def main() :
         files = {'file': open("./cli.json", 'rb')}        
         FASTAPI_URL = 'https://orkun-credit88.onrender.com/predict'
         response = requests.post(FASTAPI_URL, files = files)
-        response = response.json()
+        response = response.text
         #score = clf.predict_proba(X[X.index == int(id)])[:,1]
         
         return response
