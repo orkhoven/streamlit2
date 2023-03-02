@@ -1,5 +1,3 @@
-import requests
-import json
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -29,6 +27,7 @@ import shap  # package used to calculate Shap values
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 import streamlit.components.v1 as components
+import requests
 
 
 def main() :
@@ -47,13 +46,11 @@ def main() :
         target = data.iloc[:, -1:]
 
         return data, sample, target, description
-    
-    
 
 
     def load_model():
         '''loading the trained model'''
-        pickle_in = open('model/model_adaboost.pkl', 'rb') 
+        pickle_in = open('model/LGBMClassifier.pkl', 'rb') 
         clf = pickle.load(pickle_in)
         return clf
 
@@ -97,16 +94,13 @@ def main() :
         return df_income
 
     @st.cache
-    def load_prediction(sample, id):
-        #with open("cli.json", "w",) as file:
-        #    json.dump(sample, file,)
-        files = {'file': open("cli.json", 'rb')}        
-        FASTAPI_URL = 'https://orkun-credit88.onrender.com/predict'
-        response = requests.post(FASTAPI_URL, files = files)
-        response2 = response.text
+    def load_prediction(sample, id, clf):
+        url = "https://api-yqoc.onrender.com/predict/?id=" + str(id)
+
+        res = requests.post(url)
+        score = res.text
         #score = clf.predict_proba(X[X.index == int(id)])[:,1]
-        
-        return response2
+        return score
 
     @st.cache
     def load_kmeans(sample, id, mdl):
@@ -246,11 +240,9 @@ def main() :
     else:
         st.markdown("<i>…</i>", unsafe_allow_html=True)
 
-    #Customer solvability displayprediction = load_prediction(sample, chk_id, clf)
+    #Customer solvability display
     st.header("**Customer file analysis**")
-    
-    prediction = load_prediction(sample, chk_id)
-    
+    prediction = load_prediction(sample, chk_id, clf)
     st.write(prediction)
 
     #Compute decision according to the best threshold
@@ -288,7 +280,7 @@ def main() :
             feature_names = [i for i in data.columns if data[i].dtype in [np.int64, np.int64]]
             X = data[feature_names]
             train_X, val_X, train_y, val_y = train_test_split(X, y, random_state=1)
-            pickle_in = open('model/model_adaboost.pkl', 'rb') 
+            pickle_in = open('model/LGBMClassifier.pkl', 'rb') 
             clf = pickle.load(pickle_in)
             my_model = RandomForestClassifier(random_state=0).fit(train_X, train_y)
             row_to_show = 5
